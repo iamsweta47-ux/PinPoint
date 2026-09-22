@@ -1,0 +1,6 @@
+{
+  "name": "Pincode Hospital Finder",
+  "description": "Discover verified nearby hospitals around any Indian 6-digit PIN code with distance, specialties, and navigation directions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
