@@ -104,7 +104,7 @@ class HospitalRepository(
               node["amenity"="hospital"](around:$radiusMeters,${coords.latitude},${coords.longitude});
               way["amenity"="hospital"](around:$radiusMeters,${coords.latitude},${coords.longitude});
             );
-            out center tags 25;
+            out tags center 25;
         """.trimIndent()
 
         var response: OverpassResponse? = null
