@@ -101,6 +101,26 @@ class PinCodeRepository(
                 }
             }
 
+            // 3. Final fallback: use place/district/state name (from Postal API) to search Nominatim
+            if (coordinates == null && (placeName != null || district != null)) {
+                try {
+                    val searchQuery = listOfNotNull(placeName, district, state, "India")
+                        .distinct()
+                        .joinToString(", ")
+                    val freeformResults = nominatimApi.searchFreeform(searchQuery)
+                    if (freeformResults.isNotEmpty()) {
+                        val first = freeformResults.first()
+                        val lat = first.lat?.toDoubleOrNull()
+                        val lon = first.lon?.toDoubleOrNull()
+                        if (lat != null && lon != null) {
+                            coordinates = Coordinates(lat, lon)
+                        }
+                    }
+                } catch (_: Exception) {
+                    // Ignore; will fall through to failure below
+                }
+            }
+
             if (coordinates == null) {
                 return@withContext Result.failure(
                     NoSuchElementException("No location coordinates found for PIN code $cleanPin. Please verify the code.")
