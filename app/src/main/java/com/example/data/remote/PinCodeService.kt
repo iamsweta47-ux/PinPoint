@@ -18,6 +18,15 @@ interface NominatimApi {
         @Query("addressdetails") addressDetails: Int = 1,
         @Query("limit") limit: Int = 3
     ): List<NominatimResultDto>
+
+    @Headers("User-Agent: PincodeHospitalFinder-Android/1.0 (contact: info@pincodehospitals.app)")
+    @GET("search")
+    suspend fun searchFreeform(
+        @Query("q") query: String,
+        @Query("format") format: String = "json",
+        @Query("addressdetails") addressDetails: Int = 1,
+        @Query("limit") limit: Int = 3
+    ): List<NominatimResultDto>
 }
 
 interface ZippopotamApi {
